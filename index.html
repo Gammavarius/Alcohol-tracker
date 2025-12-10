@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Трекер алкоголя">
+        <title>Трекер алкоголя</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="icon" href="favicon.ico">
+        <link rel="stylesheet" href="style.css">
+        <script src="vendor/get-declension.min.umd.js"></script>
+    </head>
+    <body>
+        <header class="page-header">
+            <img class="logo" src="img/logo.png" alt="logo" width="200" height="100">
+            <ul class="theme-switcher">
+                <li>
+                    <button type="button" class="dark-theme-button "></button>
+                </li>
+                <li>
+                    <button type="button" class="light-theme-button active"></button>
+                </li>
+            </ul>
+        </header>
+        <main>
+            <section class="streak-section">
+                <h1>Счётчик дней трезвости</h1>
+                <div class="progress-container">
+                    <h2>Текущий прогресс</h3>
+                    <img src="img/firework.png" alt="firework">
+                    <p>12 дней</p>
+                </div>
+            </section>
+            <section class="calendar-container">
+                <div id="parent">
+                    <div id="calendar">
+                        
+                        <div class="info">
+                            <a href="#" class="prev">&lt</a>
+                            <span class="calendar-info__span">Ноябрь 2025</span>
+                            <a href="#" class="next">&gt</a>
+                            <a href="#" class="today-btn">24</a>
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Пн</th>
+                                    <th>Вт</th>
+                                    <th>Ср</th>
+                                    <th>Чт</th>
+                                    <th>Пт</th>
+                                    <th>Сб</th>
+                                    <th>Вс</th>
+                                </tr>
+                            </thead>
+                            <tbody class="body"></tbody>
+                        </table>
+                        <div class="calendar-nav">
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="achievements" id="achievements">
+                <h3>История достижений</h3>
+                <div class="achievements-history">
+                    <div class="current-session">
+                        <p><img src="img/rocket.png" alt="" width="25" height="25"> Текущее достижение</p>
+                        <span>12 дней</span><span>8.11.2025 - 19.11.2025</span>
+                    </div>
+                    <div class="best-session">
+                        <p><img src="img/fire.png" alt="" width="25" height="25"> Лучшее достижение</p>
+                        <span>12 дней</span><span>8.11.2025 - 19.11.2025</span>
+                    </div>
+                    <div class="total-days">
+                        <p><img src="img/biceps.png" alt="" width="25" height="25">ВСЕГО <span>250 дней!</span></p>
+                    </div>
+                    <div class="history-full_hidden">
+                        <p>Показать историю</p>
+                        <div></div>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+        <footer class="page=footer">
+            Беликова Юлия @2025
+        </footer>
+        
+        <script src="script/script.js"></script>
+    </body>
+</html>
