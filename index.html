@@ -11,6 +11,7 @@
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" href="style.css">
         <script src="vendor/get-declension.min.umd.js"></script>
+        <script src="script/utils.js"></script>
     </head>
     <body>
         <header class="page-header">
@@ -70,18 +71,19 @@
                 <div class="achievements-history">
                     <div class="current-session">
                         <p><img src="img/rocket.png" alt="" width="25" height="25"> Текущее достижение</p>
-                        <span>12 дней</span><span>8.11.2025 - 19.11.2025</span>
+                        <span class="quantity current-quantity"></span><span class="session-dates current-dates"></span>
                     </div>
                     <div class="best-session">
                         <p><img src="img/fire.png" alt="" width="25" height="25"> Лучшее достижение</p>
-                        <span>12 дней</span><span>8.11.2025 - 19.11.2025</span>
+                        <span class="session-quantity best-quantity"></span><span class="session-dates best-days"></span>
                     </div>
                     <div class="total-days">
                         <p><img src="img/biceps.png" alt="" width="25" height="25">ВСЕГО <span>250 дней!</span></p>
                     </div>
-                    <div class="history-full_hidden">
-                        <p>Показать историю</p>
-                        <div></div>
+                    <div class="history-session">
+                        <button class="show-history">Показать историю</button>
+                        <div class="history-container hidden">
+                        </div>
                     </div>
                     
                 </div>

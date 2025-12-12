@@ -1,10 +1,11 @@
-let calendar = document.querySelector('#calendar');
-let body = document.querySelector('.body');
-let prev = calendar.querySelector('.prev');
-let next = calendar.querySelector('.next');
-let calendarInfo = document.querySelector('.calendar-info__span');
-let todayButton = document.querySelector('.today-btn');
-let totalSoberDays = document.querySelector('.total-days p');
+const calendar = document.querySelector('#calendar');
+const body = document.querySelector('.body');
+const prev = calendar.querySelector('.prev');
+const next = calendar.querySelector('.next');
+const calendarInfo = document.querySelector('.calendar-info__span');
+const todayButton = document.querySelector('.today-btn');
+const totalSoberDays = document.querySelector('.total-days p');
+
 
 let calendarState = {
     currentYear: new Date().getFullYear(),
@@ -216,7 +217,6 @@ todayButton.addEventListener('click', function() {
     calendarState.currentMonth = newMonth;
     
     draw(body, newYear, newMonth);
-    updateCurrentDate();
 })
 
 function updateCurrentDate() {
@@ -250,7 +250,7 @@ function toggleDate(td, dateKey, soberDays) {
         delete soberDays[dateKey];
     }
     saveSoberDays(soberDays);
-    updateTotalCounter();
+    updateAllStats();
 }   
 
 function totalDaysWin () {
@@ -261,14 +261,8 @@ function totalDaysWin () {
 }
 
 function updateTotalCounter() {
-    let daysCount = totalDaysWin();
-    totalSoberDays.textContent = `ВСЕГО ${
-        getDeclension({
-        count: daysCount,
-        one: 'день',
-        few: 'дня', 
-        many: 'дней'}) 
-        }`;
+    const daysCount = totalDaysWin();
+    totalSoberDays.textContent = `ВСЕГО ${getDayName(daysCount)}`;
 }
 function isNextDay(prevDateStr, nextDateStr) {
     const expected = new Date(prevDateStr);
@@ -299,8 +293,8 @@ function getAllSeries() {
     };
 
     for(let i = 1; i < pastDates.length; i++) {
-        const currentDate = dates[i];
-        const prevDate = dates[i - 1];
+        const currentDate = pastDates[i];
+        const prevDate = pastDates[i - 1];
 
         if(isNextDay(prevDate, currentDate)) {
             currentSeries.end = currentDate;
@@ -315,36 +309,169 @@ function getAllSeries() {
         }
     }
     series.push(currentSeries);
-    return series
+    return series;
 }
-function cleanupOldData() {
+
+function isYesterdayOrToday(dateStr) {
+    const inputDate = new Date(dateStr);
+    inputDate.setHours(0, 0, 0, 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const soberDays = loadSoberDays();
-    let changed = false;
 
-    Object.keys(soberDays).forEach(dateStr => {
-        const date = new Date(dateStr);
-        date.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return (
+    inputDate.getTime() === today.getTime() || 
+    inputDate.getTime() == yesterday.getTime()
+    );
+    
+}
 
-        if(date > today) {
-            delete soberDays[dateStr];
-            changed = true;
-            console.log('Удалена будущая дата:', dateStr);
-        }
-    });
-
-    if(changed) {
-        saveSoberDays(soberDays);
-        console.log("Данные очищены");
+function getCurrentSeries() {
+    const allSeriesCount = getAllSeries();
+    if(allSeriesCount.length === 0) {
+        return null
+    }
+    let latestSeries = allSeriesCount[allSeriesCount.length - 1];
+    
+    if(isYesterdayOrToday(latestSeries.end)) {
+        return latestSeries;
+    } else {
+        return null;
     }
 }
 
-draw(body, calendarState.currentYear, calendarState.currentMonth);
-updateCalendarInfo(calendarState.currentYear, calendarState.currentMonth);
-updateCurrentDate();
-updateTotalCounter();
-console.log('soberDays в localStorage:', localStorage.getItem('soberDays'));
-console.log(getAllSeries());
-console.log(JSON.parse(localStorage.getItem('soberDays')));
-cleanupOldData();
+function updateCurrentSeries() {
+    const currentSeries = getCurrentSeries();
+    const currentQuantity = document.querySelector('.current-quantity');
+    const currentDates = document.querySelector('.current-dates');
+
+    if(currentSeries) {
+    currentQuantity.textContent = `${getDayName(currentSeries.days)}`;
+    currentDates.textContent = `${formateDate(currentSeries.start)} - ${formateDate(currentSeries.end)}`;
+    } else {
+        const messages = [
+            "Каждый день важен!", 
+            "Начните сегодня!", 
+            "Ваш рекорд ждёт!",
+            "Сегодня - ваш день!",
+            "Каждый день имеет значение!"
+        ];
+        currentQuantity.textContent = "";
+        currentDates.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+}
+
+function getBestSeries() {
+    const allSeriesCount = getAllSeries();
+    if(allSeriesCount.length === 0) return null
+
+    let bestSeries = allSeriesCount[0];
+    for (let i = 1; i < allSeriesCount.length; i++) {
+        if (allSeriesCount[i].days > bestSeries.days) {
+            bestSeries = allSeriesCount[i];
+        }
+    }
+    return bestSeries;
+}
+
+function updateBestSeries() {
+    const bestSeries = getBestSeries();
+    const bestQuantity = document.querySelector('.best-quantity');
+    const bestDays = document.querySelector('.best-days');
+    if(bestSeries) {
+        bestQuantity.textContent = `${getDayName(bestSeries.days)}`;
+        bestDays.textContent = `${formateDate(bestSeries.start)} - ${formateDate(bestSeries.end)}`
+    } else {
+        const messages = [
+            "Каждый день важен!", 
+            "Лучшие достижения начинаются сегодня!", 
+            "Ваш рекорд ждёт!",
+            "Сегодня - ваш день!",
+            "Каждый день имеет значение!"
+        ]
+        bestQuantity.textContent = "";
+        bestDays.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+}
+
+function getHistorySeries() {
+    const allSeriesCount = getAllSeries();
+    const currentSeries = getCurrentSeries();
+
+    if(currentSeries) {
+        return allSeriesCount.filter(series => series.start !== currentSeries.start || series.end !== currentSeries.end);
+    }
+    return allSeriesCount;
+}
+
+function updateHistorySeries() {
+    const historyContainer = document.querySelector('.history-container');
+    const historySeries = getHistorySeries();
+
+    historySeries.forEach(function(series) {
+        const pastSeriesQuantity = getDayName(series.days);
+        const pastSeriesDays = formateDate(series.start) + '-' + formateDate(series.end);
+        historyContainer.innerHTML += `
+            <p class="history-series"><span class="" session-quantity history-quantity>${pastSeriesQuantity}</span> 
+            <span class="session-dates history-days">${pastSeriesDays}</span></p>
+        `
+    })
+    return historyContainer;
+}
+
+function historyButtonToggle() {
+    const historyButton = document.querySelector('.show-history');
+    const historyContainer = document.querySelector('.history-container');
+    const historySeries = getHistorySeries();
+
+    const emptyMessage = document.createElement('p');
+    emptyMessage.className = 'empty-history';
+    emptyMessage.textContent = "История пуста. Ваш первый день ждёт!";
+    emptyMessage.style.display = 'none';
+
+    historyContainer.appendChild(emptyMessage);
+    historyContainer.classList.add('hidden');
+
+    historyButton.addEventListener('click', function() {
+        historyContainer.classList.toggle('hidden');
+
+        if(historyContainer.classList.contains('hidden')) {
+            this.textContent = "Показать историю";
+            emptyMessage.style.display = 'none';
+        } else {
+            this.textContent = "Скрыть историю";
+
+            if(historySeries.length === 0) {
+                emptyMessage.style.display = 'block';
+            } else {
+                emptyMessage.style.display = 'none';
+            }
+            
+        }
+    })
+}
+
+function updateStreakSectionProgress() {
+    const streakSectionDays = document.querySelector('.progress-container p');
+    const daysCount = totalDaysWin();
+    streakSectionDays.textContent = `${getDayName(daysCount)}`;
+}
+
+function updateAllStats() {
+    updateTotalCounter();
+    updateCurrentSeries();
+    updateBestSeries();
+    updateHistorySeries();
+}
+
+function initApp() {
+    draw(body, calendarState.currentYear, calendarState.currentMonth);
+    updateStreakSectionProgress()
+    updateCalendarInfo(calendarState.currentYear, calendarState.currentMonth);
+    updateCurrentDate();
+    updateAllStats();
+    historyButtonToggle();
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
