@@ -252,6 +252,7 @@ function toggleDate(td, dateKey, soberDays) {
     saveSoberDays(soberDays);
     updateAllStats();
     updateStreakSectionProgress(); 
+    updateClearHistoryState();
 }   
 
 function totalDaysWin () {
@@ -431,8 +432,7 @@ function historyButtonToggle() {
     const emptyMessage = document.createElement('p');
     emptyMessage.className = 'empty-history';
     emptyMessage.textContent = "История пуста. Ваш первый день ждёт!";
-    emptyMessage.style.display = 'none';
-
+    
     historyContainer.appendChild(emptyMessage);
     historyContainer.classList.add('hidden');
 
@@ -461,6 +461,34 @@ function updateStreakSectionProgress() {
     streakSectionDays.textContent = `${getDayName(daysCount)}`;
 }
 
+function clearHistoryButton() {
+    const clearButton = document.querySelector('.clear-history');
+    const soberDays = loadSoberDays();
+    if(Object.keys(soberDays).length === 0) {
+        clearButton.disabled = true;
+    }
+
+    clearButton.addEventListener('click', function() {
+        if(confirm("Вы уверены, что хотите удалить ВСЮ историю и обнулить статистику?")) {
+        localStorage.removeItem('soberDays');
+
+        updateAllStats();
+        updateStreakSectionProgress();
+        draw(body, calendarState.currentYear, calendarState.currentMonth);
+        this.disabled = true;
+        alert("История очищена! Вы можете начать заново!");
+        }
+    })
+}
+
+function updateClearHistoryState() {
+    const clearButton = document.querySelector('.clear-history');
+    const soberDays = loadSoberDays();
+    const hasData = Object.keys(soberDays).length > 0;
+
+    clearButton.disabled = !hasData;
+}
+
 function updateAllStats() {
     updateTotalCounter();
     updateCurrentSeries();
@@ -475,6 +503,8 @@ function initApp() {
     updateCurrentDate();
     updateAllStats();
     historyButtonToggle();
+    clearHistoryButton();
+    updateClearHistoryState();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

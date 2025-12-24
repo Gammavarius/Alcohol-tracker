@@ -3,10 +3,6 @@ body {
     padding: 0;
     font-family: "Noto Sans", sans-serif;
     min-height: 100vh;
-    /*font-optical-sizing: auto;
-    font-style: normal;*/
-    /*text-align: center;*/
-    /*background-image: linear-gradient(to right, #BAFCCE, #E6FCBA, #BAFCCE);*/
     background: linear-gradient(135deg, #E6FCBA 0%, #BAFCCE 100%);
     color: #333333;
     font-size: 16px;
@@ -218,6 +214,7 @@ a {
     background: white;
     border-radius: 20px;
     padding: 30px;
+    padding-bottom: 15px;
     box-shadow: 0 10px 30px rgba(77, 113, 5, 0.15);
 }
 .achievements h3 {
@@ -228,7 +225,7 @@ a {
     padding-bottom: 15px;
     border-bottom: 2px solid #E6FCBA;
 }
-.achievements-history > div {
+.achievements-history > div:not(:last-child) {
     background: #f9fff0;
     border-radius: 15px;
     padding: 20px;
@@ -236,7 +233,7 @@ a {
     border-left: 5px solid #83B819;
     transition: all 0.3s ease;
 }
-.achievements-history > div:hover {
+.achievements-history > div:hover:not(:last-child) {
     transform: translateX(5px);
     box-shadow: 0 5px 15px rgba(131, 184, 25, 0.2);
 }
@@ -292,7 +289,7 @@ a {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
     box-shadow: 0 4px 10px rgba(131, 184, 25, 0.3);
 }
 .show-history:hover {
@@ -333,6 +330,36 @@ a {
 .hidden {
     display: none;
 }
+.clear-history_secction {
+    display: flex;
+    justify-content: center;
+}
+.clear-history {
+    background-color: white;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.clear-history:hover {
+    background-color: gainsboro;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+}
+.clear-history:active {
+    transform: translateY(0);
+}
+.clear-history:disabled {
+    background-color: #F2F2F2;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    color: #CCCCCC;
+    border-color: #CCCCCC;
+}
 .page-footer {
     text-align: center;
     padding: 20px;
@@ -368,4 +395,3 @@ a {
     .calendar td, .calendar th {
         padding: 8px;
     }
-}
