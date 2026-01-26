@@ -417,8 +417,10 @@ function updateHistorySeries() {
         const pastSeriesQuantity = getDayName(series.days);
         const pastSeriesDays = formateDate(series.start) + '-' + formateDate(series.end);
         historyContainer.innerHTML += `
-            <p class="history-series"><span class="" session-quantity history-quantity>${pastSeriesQuantity}</span> 
-            <span class="session-dates history-days">${pastSeriesDays}</span></p>
+            <p class="history-series">
+                <span class="" session-quantity history-quantity>${pastSeriesQuantity}</span> 
+                <span class="session-dates history-days">${pastSeriesDays}</span>
+            </p>
         `
     })
     return historyContainer;
@@ -489,6 +491,37 @@ function updateClearHistoryState() {
     clearButton.disabled = !hasData;
 }
 
+function themeToggleFunction() {
+    const lightThemeButton = document.querySelector('.light-theme-button');
+    const darkThemeButton = document.querySelector('.dark-theme-button');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+
+    if(savedTheme === 'dark') {
+        body.classList.add('dark');
+        darkThemeButton.classList.add('active');
+        lightThemeButton.classList.remove('active');
+    } else {
+        body.classList.remove('dark');
+        darkThemeButton.classList.remove('active');
+        lightThemeButton.classList.add('active');
+    }
+
+    lightThemeButton.onclick = function() {
+        lightThemeButton.classList.add('active');
+        darkThemeButton.classList.remove('active');
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+
+    darkThemeButton.onclick = function() {
+        darkThemeButton.classList.add('active');
+        lightThemeButton.classList.remove('active');
+        document.body.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
 function updateAllStats() {
     updateTotalCounter();
     updateCurrentSeries();
@@ -505,6 +538,7 @@ function initApp() {
     historyButtonToggle();
     clearHistoryButton();
     updateClearHistoryState();
+    themeToggleFunction();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

@@ -25,7 +25,6 @@ a {
     background: rgba(255, 255, 255, 0.98);
     box-shadow: 0 2px 8px rgba(77, 113, 5, 0.1);
     margin-bottom: 15px;
-    position: sticky;
     top: 0;
     z-index: 100;
 }
@@ -48,7 +47,7 @@ a {
     height: 32px;
     border: 2px solid #83B819;
     border-radius: 50%;
-    background-color: white;
+    background-color: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -73,7 +72,7 @@ a {
 
 .dark-theme-button.active,
 .light-theme-button.active {
-    background-color: #C9F198;
+    background-color: #FFD700;
     border-color: #4D7105;
 }
 .streak-section {
@@ -237,12 +236,17 @@ a {
     transform: translateX(5px);
     box-shadow: 0 5px 15px rgba(131, 184, 25, 0.2);
 }
+.achievements-history p {
+    margin: 0;
+    padding: 0;
+}
 .current-session,
 .best-session{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .total-days {
     display: flex;
     justify-content: center;  
@@ -304,15 +308,7 @@ a {
     border-radius: 15px;
     border: 1px solid #E6FCBA;
 }
-.history-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-    margin-bottom: 8px;
-    background: white;
-    border-radius: 10px;
-    border-left: 4px solid #83B819;
-}
+
 .history-days {
     font-weight: bold;
     color: #4D7105;
@@ -368,6 +364,55 @@ a {
     font-size: 0.9rem;
     border-top: 1px solid #E6FCBA;
 }
+
+.page.dark {
+    background: #111801;
+    color: #F5F3E7;
+}
+.page.dark .page-header,
+.page.dark .streak-section,
+.page.dark .calendar-container,
+.page.dark .achievements,
+.page.dark .history-container {
+    background-color: rgba(33, 48, 2);
+}
+.page.dark .light-theme-button {
+    background-image: url('img/sun-light.svg');
+}
+.page.dark .calendar,
+.page.dark .calendar td.other-month,
+.page.dark .calendar td.future-day,
+.page.dark .current-session,
+.page.dark .best-session,
+.page.dark .total-days,
+.page.dark .history-session,
+.page.dark .clear-history {
+    background-color: rgba(76, 112, 5, 0.3);
+}
+.page.dark .history-session {
+    border-top-color: #4D7105;
+}
+.page.dark .calendar td.marked,
+.page.dark .calendar .today-btn,
+.page.dark .show-history {
+    background-color: rgba(77, 113, 5, 0.9);
+}
+.page.dark h1,
+.page.dark h2,
+.page.dark h3,
+.page.dark .calendar-info__span,
+.page.dark .current-session > *,
+.page.dark .best-session > *,
+.page.dark .total-days {
+    color: #E9D8A6;
+}
+.page.dark .calendar td.other-month {
+    color: #8A9778;
+}
+.page.dark .calendar td:hover:not(.future-day):not(.other-month) {
+    background: #C6F862;
+}
+
 @media (max-width: 768px) {
     .page-header {
         flex-direction: column;
@@ -395,3 +440,4 @@ a {
     .calendar td, .calendar th {
         padding: 8px;
     }
+}
