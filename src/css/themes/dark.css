@@ -1,0 +1,47 @@
+.page.dark {
+    background: #111801;
+    color: #F5F3E7;
+}
+.page.dark .page-header,
+.page.dark .streak-section,
+.page.dark .calendar-container,
+.page.dark .achievements,
+.page.dark .history-container {
+    background-color: rgba(33, 48, 2);
+}
+.page.dark .light-theme-button {
+    background-image: url('img/sun-light.svg');
+}
+.page.dark .calendar,
+.page.dark .calendar td.other-month,
+.page.dark .calendar td.future-day,
+.page.dark .current-session,
+.page.dark .best-session,
+.page.dark .total-days,
+.page.dark .history-session,
+.page.dark .clear-history {
+    background-color: rgba(76, 112, 5, 0.3);
+}
+.page.dark .history-session {
+    border-top-color: var(--primary-color);
+}
+.page.dark .calendar td.marked,
+.page.dark .calendar .today-btn,
+.page.dark .show-history {
+    background-color: rgba(77, 113, 5, 0.9);
+}
+.page.dark h1,
+.page.dark h2,
+.page.dark h3,
+.page.dark .calendar-info__span,
+.page.dark .current-session > *,
+.page.dark .best-session > *,
+.page.dark .total-days {
+    color: #E9D8A6;
+}
+.page.dark .calendar td.other-month {
+    color: #8A9778;
+}
+.page.dark .calendar td:hover:not(.future-day):not(.other-month) {
+    background: #C6F862;
+}

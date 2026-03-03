@@ -62,25 +62,21 @@ a {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 .dark-theme-button {
     background-image: url('img/moon.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
-
 .light-theme-button {
     background-image: url('img/sun.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
-
 .dark-theme-button:hover,
 .light-theme-button:hover {
     transform: scale(1.1);
     box-shadow: 0 0 10px var(--secondary-color);
 }
-
 .dark-theme-button.active,
 .light-theme-button.active {
     background-color: var(--golden-color);
@@ -260,7 +256,6 @@ a {
     justify-content: space-between;
     align-items: center;
 }
-
 .total-days {
     display: flex;
     justify-content: center;  
@@ -322,7 +317,6 @@ a {
     border-radius: var(--radius-inner);
     border: 1px solid var(--accent-light);
 }
-
 .history-days {
     font-weight: bold;
     color: var(--primary-color);
@@ -378,7 +372,6 @@ a {
     font-size: 0.9rem;
     border-top: 1px solid var(--accent-light);
 }
-
 .page.dark {
     background: #111801;
     color: #F5F3E7;
@@ -426,7 +419,6 @@ a {
 .page.dark .calendar td:hover:not(.future-day):not(.other-month) {
     background: #C6F862;
 }
-
 @media (max-width: 768px) {
     .page-header {
         flex-direction: column;

@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #E6FCBA 0%, #BAFCCE 100%);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.6;
+}
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+a {
+    color:  var(--color-text);
+    text-decoration: none;
+}
