@@ -1,0 +1,95 @@
+.calendar-container {
+    background: var(--white-color);
+    border-radius: var(--radius-big);
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(77, 113, 5, 0.15);
+}
+.hidden_title {
+    display: none;
+}
+.calendar {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--white-color);
+    border-radius: var(--radius-inner);
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(77, 113, 5, 0.1);
+}
+.calendar .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+.calendar-info__span {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.calendar a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+.calendar a:hover {
+    background: var(--accent-light);
+    transform: scale(1.1);
+}
+.calendar .today-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: var(--secondary-color);
+    color: var(--white-color);
+    border-radius: var(--radius-big);
+    border: none;
+}
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendar th {
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid var(--accent-light);
+}
+.calendar td {
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.calendar td.today {
+    background: var(--golden-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.calendar td.marked {
+    background: var(--secondary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+}
+.calendar td:hover:not(.future-day):not(.other-month) {
+    background: var(--accent-light);
+    border-radius: 50%;
+    transform: scale(1.1);
+}
+.calendar td.future-day {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.calendar td.other-month {
+    color: #aaa;
+    background: #f9f9f9;
+}

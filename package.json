@@ -1,0 +1,28 @@
+{
+  "name": "alcohol-tracker",
+  "version": "1.0.0",
+  "description": "Трекер дней трезвости",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gammavarius/Alcohol-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gammavarius/Alcohol-tracker/issues"
+  },
+  "homepage": "https://github.com/Gammavarius/Alcohol-tracker#readme",
+  "devDependencies": {
+    "gulp": "^5.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.1.0",
+    "postcss-import": "^16.1.1"
+  }
+}

@@ -1,0 +1,42 @@
+.streak-section {
+    background: var(--white-color);
+    border-radius: var(--radius-inner);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(77, 113, 5, 0.1);
+    text-align: center;
+}
+.streak-section h1 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin: 0 0 10px 0;
+    text-shadow: 2px 2px 4px rgba(131, 184, 25, 0.3);
+}
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.progress-container img {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.4));
+}
+.progress-container h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+.progress-container p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+    padding: 6px 15px;
+    background: linear-gradient(135deg, #E6FCBA, #BAFCCE);
+    border-radius: var(--radius-big);
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(131, 184, 25, 0.2);
+}
