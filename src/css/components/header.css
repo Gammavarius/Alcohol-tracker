@@ -33,12 +33,12 @@
     transition: all 0.3s ease;
 }
 .dark-theme-button {
-    background-image: url('img/moon.svg');
+    background-image: url('../../img/moon.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
 .light-theme-button {
-    background-image: url('img/sun.svg');
+    background-image: url('../../img/sun.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
