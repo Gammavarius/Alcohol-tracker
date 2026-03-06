@@ -10,7 +10,7 @@
     background-color: rgba(33, 48, 2);
 }
 .page.dark .light-theme-button {
-    background-image: url('img/sun-light.svg');
+    background-image: url('../../img/sun-light.svg');
 }
 .page.dark .calendar,
 .page.dark .calendar td.other-month,

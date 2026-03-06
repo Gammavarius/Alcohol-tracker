@@ -293,6 +293,9 @@ a {
     padding-top: 20px;
     border-top: 2px dashed var(--accent-light);
 }
+.history-series .session-quantity {
+    margin-right: 10px;
+}
 .show-history {
     background: var(--secondary-color);
     color: var(--white-color);
@@ -334,7 +337,7 @@ a {
 .hidden {
     display: none;
 }
-.clear-history_secction {
+.clear-history_section {
     display: flex;
     justify-content: center;
 }
@@ -384,7 +387,7 @@ a {
     background-color: rgba(33, 48, 2);
 }
 .page.dark .light-theme-button {
-    background-image: url('img/sun-light.svg');
+    background-image: url('../../img/sun-light.svg');
 }
 .page.dark .calendar,
 .page.dark .calendar td.other-month,

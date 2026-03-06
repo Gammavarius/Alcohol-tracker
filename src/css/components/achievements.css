@@ -73,6 +73,9 @@
     padding-top: 20px;
     border-top: 2px dashed var(--accent-light);
 }
+.history-series .session-quantity {
+    margin-right: 10px;
+}
 .show-history {
     background: var(--secondary-color);
     color: var(--white-color);
@@ -115,7 +118,7 @@
 .hidden {
     display: none;
 }
-.clear-history_secction {
+.clear-history_section {
     display: flex;
     justify-content: center;
 }
