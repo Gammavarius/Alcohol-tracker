@@ -118,7 +118,11 @@
 .hidden {
     display: none;
 }
+<<<<<<< HEAD
 .clear-history_section {
+=======
+.clear-history_secction {
+>>>>>>> f1f4b82a07b9c7a26865b5485b77ef6451a675a6
     display: flex;
     justify-content: center;
 }
