@@ -4,5 +4,6 @@ Thumbs.db
 *.log
 *.tmp
 cleanupOldDataFunc.js
-script/history/ 
+script/history/
+node_modules/
  
