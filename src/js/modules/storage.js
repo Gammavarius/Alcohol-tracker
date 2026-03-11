@@ -14,4 +14,4 @@ function totalDaysWin () {
     return totalSoberArr.length;
 }
 
-export { loadSoberDays, saveSoberDays, totalDaysWin };
+export { loadSoberDays, saveSoberDays, totalDaysWin }

@@ -1,6 +1,7 @@
-import { getHistorySeries, updateStreakSectionProgress, updateAllStats} from './stats.js';
+import { getHistorySeries, updateAllStats, updateStreakSectionProgress } from './stats.js';
 import { loadSoberDays } from './storage.js';
-import { calendarState } from './calendar.js';
+import { draw, calendarState } from './calendar.js';
+
 function historyButtonToggle() {
     const historyButton = document.querySelector('.show-history');
     const historyContainer = document.querySelector('.history-container');
@@ -91,4 +92,4 @@ function themeToggleFunction() {
     }
 }
 
-export { historyButtonToggle, clearHistoryButton, updateClearHistoryState, themeToggleFunction}
+export { historyButtonToggle, clearHistoryButton, updateClearHistoryState, themeToggleFunction };

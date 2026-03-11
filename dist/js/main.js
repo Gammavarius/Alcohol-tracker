@@ -38,6 +38,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var body = document.querySelector('.body');
 var calendar = document.querySelector('.calendar');
 var prev = calendar.querySelector('.prev');
 var next = calendar.querySelector('.next');
@@ -47,7 +48,6 @@ var calendarState = exports.calendarState = {
   currentYear: new Date().getFullYear(),
   currentMonth: new Date().getMonth() + 1
 };
-var body = document.querySelector('.body');
 function draw(body, year, month) {
   var lastDay = getLastDay(year, month);
   var arr = range(year, month, 1, lastDay, true);
@@ -158,32 +158,29 @@ function chunk(arr, n) {
   return result;
 }
 next.addEventListener('click', function () {
-  navigateCalendar('next', body);
+  navigateCalendar('next');
 });
 prev.addEventListener('click', function () {
-  navigateCalendar('prev', body);
+  navigateCalendar('prev');
 });
-function navigateCalendar(direction, body) {
-  var currentYear = calendarState.currentYear;
-  var currentMonth = calendarState.currentMonth;
-  var newYear, newMonth;
-  if (direction === 'next') {
-    newYear = getNextYear(currentYear, currentMonth);
-    newMonth = getNextMonth(currentMonth);
-  } else {
-    newYear = getPrevYear(currentYear, currentMonth);
-    newMonth = getPrevMonth(currentMonth);
-  }
-  calendarState.currentYear = newYear;
-  calendarState.currentMonth = newMonth;
-  draw(body, newYear, newMonth);
-}
 function getNextYear(year, month) {
   if (month == 12) {
     return year + 1;
   } else {
     return year;
   }
+}
+function toggleDate(td, dateKey, soberDays) {
+  td.classList.toggle('marked');
+  if (td.classList.contains('marked')) {
+    soberDays[dateKey] = true;
+  } else {
+    delete soberDays[dateKey];
+  }
+  (0, _storage.saveSoberDays)(soberDays);
+  (0, _stats.updateAllStats)();
+  (0, _stats.updateStreakSectionProgress)();
+  (0, _ui.updateClearHistoryState)();
 }
 function getNextMonth(month) {
   if (month == 12) {
@@ -210,24 +207,35 @@ function updateCalendarInfo(year, month) {
   var monthName = (0, _utils.getMonthName)(month);
   calendarInfo.textContent = "".concat(monthName, " ").concat(year);
 }
+function navigateCalendar(direction) {
+  var currentYear = calendarState.currentYear;
+  var currentMonth = calendarState.currentMonth;
+  var newYear, newMonth;
+  if (direction === 'next') {
+    newYear = getNextYear(currentYear, currentMonth);
+    newMonth = getNextMonth(currentMonth);
+  } else {
+    newYear = getPrevYear(currentYear, currentMonth);
+    newMonth = getPrevMonth(currentMonth);
+  }
+  calendarState.currentYear = newYear;
+  calendarState.currentMonth = newMonth;
+  draw(body, newYear, newMonth);
+}
+todayButton.addEventListener('click', function () {
+  var currentDate = new Date();
+  var newYear = currentDate.getFullYear();
+  var newMonth = currentDate.getMonth() + 1;
+  calendarState.currentYear = newYear;
+  calendarState.currentMonth = newMonth;
+  draw(body, newYear, newMonth);
+});
 function updateCurrentDate() {
   var currentDate = new Date();
   var day = currentDate.getDate();
   var month = currentDate.getMonth() + 1;
   var year = currentDate.getFullYear();
   todayButton.textContent = "".concat(day, ".").concat(month, ".").concat(year);
-}
-function toggleDate(td, dateKey, soberDays) {
-  td.classList.toggle('marked');
-  if (td.classList.contains('marked')) {
-    soberDays[dateKey] = true;
-  } else {
-    delete soberDays[dateKey];
-  }
-  (0, _storage.saveSoberDays)(soberDays);
-  (0, _stats.updateAllStats)();
-  (0, _stats.updateStreakSectionProgress)();
-  (0, _ui.updateClearHistoryState)();
 }
 
 },{"./stats.js":3,"./storage.js":4,"./ui.js":5,"./utils.js":6}],3:[function(require,module,exports){
@@ -236,10 +244,20 @@ function toggleDate(td, dateKey, soberDays) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getAllSeries = getAllSeries;
+exports.getBestSeries = getBestSeries;
 exports.getCurrentSeries = getCurrentSeries;
 exports.getHistorySeries = getHistorySeries;
+Object.defineProperty(exports, "totalDaysWin", {
+  enumerable: true,
+  get: function get() {
+    return _storage.totalDaysWin;
+  }
+});
 exports.updateAllStats = updateAllStats;
+exports.updateBestSeries = updateBestSeries;
 exports.updateCurrentSeries = updateCurrentSeries;
+exports.updateHistorySeries = updateHistorySeries;
 exports.updateStreakSectionProgress = updateStreakSectionProgress;
 var _storage = require("./storage.js");
 var _utils = require("./utils.js");
@@ -342,25 +360,12 @@ function updateHistorySeries() {
   var historyContainer = document.querySelector('.history-container');
   var historySeries = getHistorySeries();
   historyContainer.innerHTML = '';
-  historySeries.reverse().forEach(function (series) {
-    var p = document.createElement('p');
-    p.className = 'history-series';
-    var quantitySpan = document.createElement('span');
-    quantitySpan.className = "session-quantity history-quantity";
-    quantitySpan.textContent = (0, _utils.getDayName)(series.days);
-    var dateSpan = document.createElement('span');
-    dateSpan.className = "session-dates history-days";
-    dateSpan.textContent = (0, _utils.formateDate)(series.start) + '-' + (0, _utils.formateDate)(series.end);
-    p.appendChild(quantitySpan);
-    p.appendChild(dateSpan);
-    historyContainer.appendChild(p);
+  historySeries.forEach(function (series) {
+    var pastSeriesQuantity = (0, _utils.getDayName)(series.days);
+    var pastSeriesDays = (0, _utils.formateDate)(series.start) + '-' + (0, _utils.formateDate)(series.end);
+    historyContainer.innerHTML += "\n            <p class=\"history-series\">\n                <span class=\"\" session-quantity history-quantity>".concat(pastSeriesQuantity, "</span> \n                <span class=\"session-dates history-days\">").concat(pastSeriesDays, "</span>\n            </p>\n        ");
   });
   return historyContainer;
-}
-function updateStreakSectionProgress() {
-  var streakSectionDays = document.querySelector('.progress-container p');
-  var daysCount = (0, _storage.totalDaysWin)();
-  streakSectionDays.textContent = "".concat((0, _utils.getDayName)(daysCount));
 }
 function updateAllStats() {
   updateTotalCounter();
@@ -371,6 +376,11 @@ function updateAllStats() {
 function updateTotalCounter() {
   var daysCount = (0, _storage.totalDaysWin)();
   totalSoberDays.textContent = "\u0412\u0421\u0415\u0413\u041E ".concat((0, _utils.getDayName)(daysCount));
+}
+function updateStreakSectionProgress() {
+  var streakSectionDays = document.querySelector('.progress-container p');
+  var daysCount = (0, _storage.totalDaysWin)();
+  streakSectionDays.textContent = "".concat((0, _utils.getDayName)(daysCount));
 }
 
 },{"./storage.js":4,"./utils.js":6}],4:[function(require,module,exports){
@@ -444,7 +454,7 @@ function clearHistoryButton() {
       localStorage.removeItem('soberDays');
       (0, _stats.updateAllStats)();
       (0, _stats.updateStreakSectionProgress)();
-      draw(body, _calendar.calendarState.currentYear, _calendar.calendarState.currentMonth);
+      (0, _calendar.draw)(body, _calendar.calendarState.currentYear, _calendar.calendarState.currentMonth);
       this.disabled = true;
       alert("История очищена! Вы можете начать заново!");
     }

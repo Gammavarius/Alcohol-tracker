@@ -1,5 +1,5 @@
-import { loadSoberDays, totalDaysWin } from "./storage.js";
-import { getDayName, formateDate, isNextDay, isYesterdayOrToday } from "./utils.js";
+import { loadSoberDays, totalDaysWin } from './storage.js';
+import { getDayName, formateDate, isNextDay, isYesterdayOrToday } from './utils.js';
 
 const totalSoberDays = document.querySelector('.total-days span');
 
@@ -128,30 +128,17 @@ function updateHistorySeries() {
 
     historyContainer.innerHTML = '';
 
-    historySeries.reverse().forEach(function(series) {
-        const p = document.createElement('p');
-        p.className = 'history-series';
-
-        const quantitySpan = document.createElement('span');
-        quantitySpan.className = "session-quantity history-quantity";
-        quantitySpan.textContent = getDayName(series.days);
-
-        const dateSpan = document.createElement('span');
-        dateSpan.className = "session-dates history-days";
-        dateSpan.textContent = formateDate(series.start) + '-' + formateDate(series.end);
-
-        p.appendChild(quantitySpan);
-        p.appendChild(dateSpan);
-
-        historyContainer.appendChild(p);
+    historySeries.forEach(function(series) {
+        const pastSeriesQuantity = getDayName(series.days);
+        const pastSeriesDays = formateDate(series.start) + '-' + formateDate(series.end);
+        historyContainer.innerHTML += `
+            <p class="history-series">
+                <span class="" session-quantity history-quantity>${pastSeriesQuantity}</span> 
+                <span class="session-dates history-days">${pastSeriesDays}</span>
+            </p>
+        `
     })
     return historyContainer;
-}
-
-function updateStreakSectionProgress() {
-    const streakSectionDays = document.querySelector('.progress-container p');
-    const daysCount = totalDaysWin();
-    streakSectionDays.textContent = `${getDayName(daysCount)}`;
 }
 
 function updateAllStats() {
@@ -166,4 +153,21 @@ function updateTotalCounter() {
     totalSoberDays.textContent = `ВСЕГО ${getDayName(daysCount)}`;
 }
 
-export { updateAllStats, updateStreakSectionProgress, getHistorySeries, getCurrentSeries, updateCurrentSeries }
+function updateStreakSectionProgress() {
+    const streakSectionDays = document.querySelector('.progress-container p');
+    const daysCount = totalDaysWin();
+    streakSectionDays.textContent = `${getDayName(daysCount)}`;
+}
+
+export { 
+    getAllSeries,
+    getCurrentSeries,
+    updateCurrentSeries,
+    getBestSeries,
+    updateBestSeries,
+    getHistorySeries,
+    updateHistorySeries,
+    updateAllStats,
+    updateStreakSectionProgress,
+    totalDaysWin
+};
